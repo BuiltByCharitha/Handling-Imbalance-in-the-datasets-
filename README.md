@@ -1,91 +1,30 @@
-# Handling-Imbalance-in-the-datasets-
-Credit Card Fraud Detection and Human Activity Recognition
+# Run Notebook in the server
 
 
-## 📌 Project Overview
-This project consists of two major tasks:
-1. **💳 Credit Card Fraud Detection** - Detect fraudulent transactions using machine learning.
-2. **🏃 Human Activity Recognition** - Classify human activities based on sensor data using ML models.
+## 1. Install all the dependencies
+```
+pip install -r requirements.txt (
+```
+This may take a minute or two.
+## Task 1: Credit Fraud Detection - System Training
+PS4_task1_training.ipynb trains a random forest model on the testing credit fraud data - THIS IS ALREADY RAN
+The model is exported as 'task_1_model.pkl'
 
----
+## Task 1: Cred Fraud Detection - Prediction
+prediction.ipynb uses the model to make label predictions (is_fraud, not_fraud)
+Insert test path of dataset:  test_data_path = 'cct_train.csv'
+Change file name to name of testf file.
+Prints out the columns used for prediction and relevant metrics
 
-## 🏦 Task 1: Credit Card Fraud Detection
+## TASK 2: HUMAN ACTIVITY RECOGNITION
 
-### 🔍 Methodology
-- **📊 Data Preprocessing:**
-  - Scaled features using `StandardScaler`.
-  - Split dataset into training & testing sets.
-- **🛠️ Feature Engineering:**
-  - **Geographical Features:** Flagged transactions outside the US.
-  - **Transaction Category:** Marked suspicious categories.
-  - **Time-Based Features:** Extracted date & time components.
-  - **Profile & Merchant Encoding:** Encoded transactions & computed merchant frequencies.
-  - **Feature Selection:** Removed irrelevant features.
-- **🧠 Model Selection & Training:**
-  - Used **Random Forest** classifier.
-  - Hyperparameters tuned via **Grid Search** (F1-score optimization).
-- **📈 Evaluation & Testing:**
-  - Used **Accuracy, F1-score, and classification reports**.
-  - Cross-validation ensured robustness.
-  - Feature importance analysis performed.
+The model predicts the type of human activity (11 types of activities) based on different sensors' data.
 
-### 🏆 Results
-✅ **Accuracy:** 90%+  
-✅ **Fraud Class Recall:** 89%  
-✅ **Precision:** 99.99%  
+## How to train the model
 
-### 🔎 Observations
-- Class weight balancing **worsened** precision & recall.
-- Fraud detection needs **high recall** to catch fraud cases.
+Run the file "PS4_task2_training.ipynb" entirely. It trains SVM and XGBoost models separately just to check the performance and then Voting Classifier is trained. Then the StandardScaler that is fit on the train data and the Voting Classifier are saved in the "pipeline_task2.pkl" file.
+Also, the label encoder that is fit on the train data is saved in the "label_encoder_task2.pkl" file.
 
----
+## How to test the model
 
-## 🚶 Task 2: Human Activity Recognition
-
-### 🔍 Methodology
-- **📊 Data Preprocessing:**
-  - Handled missing values.
-  - Label-encoded target column.
-  - Normalized features using `StandardScaler`.
-- **🧠 Model Selection & Training:**
-  - Trained **SVM** and **XGBoost** models.
-  - Used **Soft Voting Classifier** to combine models.
-  - Applied **class weighting** for handling imbalance.
-- **📈 Evaluation & Testing:**
-  - Used **Accuracy, Precision, Recall, and F1-score**.
-  - Analyzed confusion matrices.
-  - Saved best-performing model as a **pipeline**.
-
-### 🏆 Results
-✅ **Macro F1-score:** 0.74  
-✅ **Test Accuracy:** 83.52%  
-
-### 🔎 Observations
-- **SMOTE (oversampling) worsened performance**, so it was removed.
-- **Class weights improved accuracy** significantly.
-- **Soft Voting improved F1-score** from **0.7019 → 0.7455**.
-
----
-
-## ⚠️ Challenges Faced
-### 🏦 Task 1: Fraud Detection
-- Some engineered features (e.g., **customer-merchant distance**) had **low impact**.
-- Ensuring **consistent preprocessing** for training & test data.
-
-### 🚶 Task 2: Activity Recognition
-- **Class imbalance:**
-  - **SMOTE did not work**; class weights were a better alternative.
-- **Model Deployment Issues:**
-  - Initially, **encoders & scalers weren’t saved**, causing errors.
-  - The final pipeline includes **scaler + voting classifier**.
-
----
-
-## 🏁 Conclusion
-✅ **Feature Engineering Matters**: New features improved fraud detection.
-✅ **Model Experimentation is Key**: Tried multiple models before selecting the best.
-✅ **Handling Class Imbalance**: **Class weighting** was better than oversampling.
-✅ **Deployment Ready**: Final models are **saved using `joblib`** for easy testing.
-
----
-
+In the file, "prediction.ipynb" Change the file name "har_train.csv" to the name of the test file being provided. Then run the code below. Model is loaded and metrics are reported on the given test data.
